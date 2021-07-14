@@ -1,3 +1,8 @@
+source ~/.zsh-plugins/zsh-snap/znap.zsh
+
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -15,13 +20,15 @@ ZSH_THEME="bullet-train"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+    zsh-nvm
+    zsh-256color
     git
     vscode
 )
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+# ---- User configuration ----
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -46,12 +53,19 @@ BULLETTRAIN_DIR_BG=magenta
 BULLETTRAIN_DIR_FG=black
 BULLETTRAIN_NVM_FG=black
 
-# Example aliases
+# Use ripgrep instead of find
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{**/.git,**/dist,**/node_modules}/*"'
+
+# Initialize Zoxide
+eval "$(zoxide init zsh)"
+
+# ---- Aliases ----
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias profile="nvim ~/.zshrc"
-alias vprofile="nvim ~/.config/nvim/conf"
+alias vprofile="nvim ~/.config/nvim/init.lua"
 alias clr="clear"
-alias refresh="source ~/.zshrc"
+alias refresh="znap restart"
+alias linos="tmux a -t LinOS"
 
 # git alias commands
 alias gf='git fetch'
@@ -74,7 +88,7 @@ alias dc='docker-compose'
 # Python Aliases #
 alias python=python3
 
-## Custom functions ##
+# ---- Custom functions ----
 
 # Combined git commit & push and alias
 git_commit_and_push() {
@@ -89,12 +103,10 @@ kill_process_on_port() {
 }
 alias pkfire="kill_process_on_port"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-[[ -s "$HOME/.avn/bin/avn.sh" ]] && source "$HOME/.avn/bin/avn.sh" # load avn
+# ---- Linos Stuff ----
+export LINOS_DB_AUTOMATION_HOST=localhost
+export LINOS_DB_AUTOMATION_USERNAME=local_user
+export LINOS_DB_AUTOMATION_PASSWORD=local_password
+export LINOS_DB_AUTOMATION_NAME=linos
 
-# Use ripgrep instead of find
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{**/.git,**/dist,**/node_modules}/*"'
-
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
+alias luamake=/home/sam/clones/lua-language-server/3rd/luamake/luamake

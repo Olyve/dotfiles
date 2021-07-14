@@ -1,19 +1,18 @@
 local utils = {}
 local api = vim.api
 local fn = vim.fn
-local scopes = { o = vim.o, b = vim.bo, w = vim.wo }
 
-_G.tab_complete = function()
+function _G.tab_complete()
   if fn.pumvisible() == 1 then
     return utils.t "<c-n>"
   elseif utils.check_back_space() then
     return utils.t "<tab>"
   else
-    return fn['coc#refresh()']
+    return fn['compe#complete()']
   end
 end
 
-_G.s_tab_complete = function()
+function _G.s_tab_complete()
   if fn.pumvisible() == 1 then
     return utils.t "<c-p>"
   else
@@ -21,9 +20,12 @@ _G.s_tab_complete = function()
   end
 end
 
-function utils.opt(scope, key, value)
-  scopes[scope][key] = value
-  if scope ~= 'o' then scopes['o'][key] = value end
+function _G.modify_enter_mapping()
+  if fn.pumvisible() == 1 then
+    return utils.t "<c-y>"
+  else
+    return utils.t "<c-g>u<cr>"
+  end
 end
 
 function utils.map(mode, lhs, rhs, opts)
