@@ -2,13 +2,15 @@ local utils = {}
 local api = vim.api
 local fn = vim.fn
 
+-- Global utils
+
 function _G.tab_complete()
   if fn.pumvisible() == 1 then
     return utils.t "<c-n>"
   elseif utils.check_back_space() then
     return utils.t "<tab>"
   else
-    return fn['compe#complete()']
+    return fn['compe#complete']()
   end
 end
 
@@ -25,8 +27,33 @@ function _G.modify_enter_mapping()
     return utils.t "<c-y>"
   else
     return utils.t "<c-g>u<cr>"
+    end
+end
+
+function _G.LightlineFileFormat()
+  if vim.api.nvim_win_get_width(0) > 70 and vim.api.buffer_filetype ~= 'nerdtree' then
+    if vim.api.buffer_filetype ~= '' then
+      return '&fileformat'
+    end
+  else
+    return ''
   end
 end
+
+function _G.LightlineFileEncoding()
+  if vim.api.nvim_win_get_width(0) > 70 and vim.api.buffer_filetype ~= 'nerdtree' then
+    if vim.api.buffer_filetype ~= '' then
+      return '&filetype'
+    else
+      return 'no ft'
+    end
+  else
+    return ''
+  end
+end
+
+
+-- Utils methods
 
 function utils.map(mode, lhs, rhs, opts)
   local options = { noremap = true }

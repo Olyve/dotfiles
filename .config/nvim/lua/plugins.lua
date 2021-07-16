@@ -7,13 +7,12 @@ return require('packer').startup(function(use)
   -- Statusline & Symbols
   use 'airblade/vim-gitgutter'
   use 'bling/vim-bufferline'
-  use 'vim-airline/vim-airline'
-  use 'vim-airline/vim-airline-themes'
+  use 'itchyny/lightline.vim'
 
   -- Tmux Integrations
   use 'christoomey/vim-tmux-navigator'
   use 'edkolev/tmuxline.vim'
-  use 'andersevenrud/compe-tmux'
+  use { 'andersevenrud/compe-tmux', requires = { 'hrsh7th/nvim-compe' } }
 
   -- Session Management
   use 'tpope/vim-obsession'
@@ -40,18 +39,12 @@ return require('packer').startup(function(use)
   use 'HerringtonDarkholme/yats.vim'
   use 'jparise/vim-graphql'
   use 'mattn/emmet-vim'
-  use 'rafcamlet/coc-nvim-lua'
   use 'ray-x/lsp_signature.nvim'
   use 'rust-lang/rust.vim'
 
   -- Fzf
   use 'junegunn/fzf'
   use { 'junegunn/fzf.vim', requires = { 'junegunn/fzf' } }
-  use { 'ojroques/nvim-lspfuzzy', requires = {
-    { 'junegunn/fzf' },
-    { 'junegunn/fzf.vim' }
-  }}
-
 
   -- Treesitter
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -60,7 +53,6 @@ return require('packer').startup(function(use)
   use 'neovim/nvim-lspconfig'
   use 'jose-elias-alvarez/null-ls.nvim'
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
-  use 'glepnir/lspsaga.nvim'
 
   -- nvim-compe
   use 'hrsh7th/nvim-compe'
@@ -95,17 +87,6 @@ return require('packer').startup(function(use)
 
   ---- Plugin Settings ----
 
-  -- Airline --
-  g.airline_theme = 'molokai'
-  g.airline_powerline_fonts = 1
-  g['airline#extensions#obsession#enabled'] = 1
-  g['airline#extensions#obsession#indicator_text'] = '$'
-  g['airline#extensions#tagbar#enabled'] = 0
-  g['airline#extensions#bufferline#enabled'] = 1
-  g['airline#extensions#coc#enabled'] = 1
-  g['airline#extensions#fzf#enabled'] = 0
-  g['airline#extensions#tabline#enabled'] = 0
-
   -- Bookmarks --
   g.bookmark_save_per_working_dir = 1
   g.bookmark_auto_save = 1
@@ -113,6 +94,29 @@ return require('packer').startup(function(use)
   g.bookmark_center = 1
   g.bookmark_auto_close = 1
   g.bookmark_disable_ctrlp = 1
+
+  -- Lightline --
+  g.lightline = {
+    colorscheme = 'ayu_dark',
+    active = {
+      left = {
+        { 'mode', 'paste' },
+        { 'gitbranch', 'readonly', 'filename', 'modified' }
+      },
+      right = {
+        { 'lineinfo' },
+        { 'percent' },
+        {
+          'fileformat', 'fileencoding', 'filetype',
+        },
+      },
+    },
+    component_function = {
+      gitbranch = 'FugitiveHead',
+      fileformat = 'v:lua.LightlineFileFormat()',
+      fileencoding = 'v:lua.LightlineFileEncoding()'
+    },
+  }
 
   -- NERDTree --
   g.NERDTreeIgnore = { 'node_modules', 'dist', 'build' }
@@ -125,7 +129,7 @@ return require('packer').startup(function(use)
   -- Vista Config --
   g.vista_default_executive = 'nvim_lsp'
   g.vista_sidebar_width = 50
-  g.vista_disable_statusline = 0
+  g.vista_disable_statusline = 1
   g.vista_enable_markdown_extension = 0
 
 end)

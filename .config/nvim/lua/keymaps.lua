@@ -12,10 +12,6 @@ utils.map('n', '<leader>k', '<c-W><c-K>')
 utils.map('n', '<leader>l', '<c-W><c-L>')
 utils.map('n', '<leader>h', '<c-W><c-H>')
 
--- Terminal Shortcuts
-utils.map('t', '<esc>', '<c-\\><c-n>:Lspsaga close_floaterm<cr>', { silent = true })
-utils.map('n', '<leader>ft', ':Lspsaga open_floaterm<cr>', { silent = true })
-
 -- Faster buffer saving
 utils.map('n', '<Leader>ss', ':w<cr>')
 
@@ -32,27 +28,23 @@ utils.map('n', '<leader>bf', ':Buffers<cr>')
 
 -- GoTo code navigation
 utils.map('n', '<leader>gd', '<cmd>lua vim.lsp.buf.definition()<cr>', { silent = true })
-utils.map('n', '<leader>gp', '<cmd>lua require"lspsaga.provider".preview_definition()<cr>', { silent = true })
 utils.map('n', '<leader>gy', '<cmd>lua vim.lsp.buf.type_definition()<cr>', { silent = true })
 utils.map('n', '<leader>gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', { silent = true })
-utils.map('n', '<leader>gr', ':Lspsaga lsp_finder<cr>', { silent = true })
+utils.map('n', '<leader>gr', '<cmd>lua vim.lsp.buf.references()<cr>', { silent = true })
 
 -- Use K to show documentation in the preview window
-utils.map('n', 'K', ':Lspsaga hover_doc<cr>', { silent = true })
-
--- Signature Help
-utils.map('n', '<leader>gs', ':Lspsaga signature_help<cr>', { silent = true })
+utils.map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', { silent = true })
 
 -- Symbol renaming
-utils.map('n', '<leader>rn', ':Lspsaga rename<cr>', { silent = true } )
+utils.map('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', { silent = true } )
 
 -- Quick Fix
-utils.map('n', '<leader>qf', ':Lspsaga code_action<cr>', { silent = true })
+utils.map('n', '<leader>qf', '<cmd>lua vim.lsp.buf.code_action()<cr>', { silent = true })
 
--- Diagnostics
-utils.map('n', '<leader>gn', ':Lspsaga diagnostic_jump_next<cr>', { silent = true })
-utils.map('n', '<leader>gp', ':Lspsaga diagnostic_jump_previous<cr>', { silent = true })
-utils.map('n', '<leader>sd', ':Lspsaga show_line_diagnostics<cr>', { silent = true })
+-- LSP Diagnostics
+utils.map('n', '<leader>gn', '<cmd>lua vim.lsp.diagnostic.goto_next()<cr>', { silent = true })
+utils.map('n', '<leader>gp', '<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>', { silent = true })
+utils.map('n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>', { silent = true })
 
 -- Formatting
 utils.map('n', '<leader>fr', '<cmd>lua vim.lsp.buf.formatting()<cr>', { silent = true })
