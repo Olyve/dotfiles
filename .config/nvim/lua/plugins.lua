@@ -53,6 +53,7 @@ return require("packer").startup(
       requires = {{"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"}}
     }
     use {"camgraff/telescope-tmux.nvim", requires = {"norcalli/nvim-terminal.lua"}}
+    use {"tom-anders/telescope-vim-bookmarks.nvim"}
 
     -- Treesitter
     use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
@@ -101,6 +102,7 @@ return require("packer").startup(
     ---- Plugin Settings ----
 
     -- Bookmarks --
+    g.bookmark_no_default_key_mappings = 1
     g.bookmark_save_per_working_dir = 1
     g.bookmark_auto_save = 1
     g.bookmark_manage_per_buffer = 1

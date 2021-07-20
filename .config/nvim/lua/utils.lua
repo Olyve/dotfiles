@@ -15,7 +15,7 @@ function _G.tab_complete()
   elseif utils.check_back_space() then
     return utils.t "<tab>"
   else
-    return fn['compe#complete']()
+    return fn["compe#complete"]()
   end
 end
 
@@ -32,51 +32,54 @@ function _G.modify_enter_mapping()
     return utils.t "<c-y>"
   else
     return utils.t "<c-g>u<cr>"
-    end
+  end
 end
 
 function _G.LightlineFileFormat()
-  if vim.api.nvim_win_get_width(0) > 70 and vim.api.buffer_filetype ~= 'nerdtree' then
-    if vim.api.buffer_filetype ~= '' then
-      return '&fileformat'
+  if vim.api.nvim_win_get_width(0) > 70 and vim.api.buffer_filetype ~= "nerdtree" then
+    if vim.api.buffer_filetype ~= "" then
+      return "&fileformat"
     end
   else
-    return ''
+    return ""
   end
 end
 
 function _G.LightlineFileEncoding()
-  if vim.api.nvim_win_get_width(0) > 70 and vim.api.buffer_filetype ~= 'nerdtree' then
-    if vim.api.buffer_filetype ~= '' then
-      return '&filetype'
+  if vim.api.nvim_win_get_width(0) > 70 and vim.api.buffer_filetype ~= "nerdtree" then
+    if vim.api.buffer_filetype ~= "" then
+      return "&filetype"
     else
-      return 'no ft'
+      return "no ft"
     end
   else
-    return ''
+    return ""
   end
 end
-
 
 -- Utils methods
 
 function utils.map(mode, lhs, rhs, opts)
-  local options = { noremap = true }
+  local options = {noremap = true}
   if opts then
-    options = vim.tbl_extend('force', options, opts)
+    options = vim.tbl_extend("force", options, opts)
   end
   api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
+function utils.unmap(mode, lhs)
+  api.nvim_set_keymap(mode, lhs)
+end
+
 function utils.nvim_create_augroups(definitions)
   for group_name, definition in pairs(definitions) do
-    api.nvim_command('augroup '..group_name)
-    api.nvim_command('autocmd!')
+    api.nvim_command("augroup " .. group_name)
+    api.nvim_command("autocmd!")
     for _, def in ipairs(definition) do
-      local command = table.concat(vim.tbl_flatten{'autocmd', def}, ' ')
+      local command = table.concat(vim.tbl_flatten {"autocmd", def}, " ")
       api.nvim_command(command)
     end
-    api.nvim_command('augroup END')
+    api.nvim_command("augroup END")
   end
 end
 
@@ -85,8 +88,8 @@ function utils.t(str)
 end
 
 function utils.check_back_space()
-  local col = fn.col('.') - 1
-  if col == 0 or fn.getline('.'):sub(col, col):match('%s') then
+  local col = fn.col(".") - 1
+  if col == 0 or fn.getline("."):sub(col, col):match("%s") then
     return true
   else
     return false
@@ -94,4 +97,3 @@ function utils.check_back_space()
 end
 
 return utils
-
