@@ -4,6 +4,11 @@ local fn = vim.fn
 
 -- Global utils
 
+function _G.load(file)
+  require("plenary.reload").reload_module(file, true)
+  return require(file)
+end
+
 function _G.tab_complete()
   if fn.pumvisible() == 1 then
     return utils.t "<c-n>"

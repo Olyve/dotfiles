@@ -1,7 +1,7 @@
-local utils = require('utils')
+local utils = require("utils")
 local definitions = {}
 
-definitions['nerd_tree'] = {
+definitions["nerd_tree"] = {
   "StdinReadPre * let s:std_id=1",
   -- automatically open NERDTree when vim starts
   "VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') | execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif",
@@ -10,7 +10,9 @@ definitions['nerd_tree'] = {
   -- Exit Vim if NERDTree is the only window left
   [[BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif]]
 }
-definitions['lsp']= {
-  "CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics()"
+definitions["lsp"] = {
+  "CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics()",
+  -- Format document on save
+  "BufWritePost *.lua,*.ts,*.json FormatWrite"
 }
 utils.nvim_create_augroups(definitions)
