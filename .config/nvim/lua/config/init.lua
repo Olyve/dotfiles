@@ -1,0 +1,6 @@
+require("config.treesitter")
+require("config.compe")
+require("config.formatter")
+require("config.telescope")
+require("config.neorg")
+require("config.nvim-tree")

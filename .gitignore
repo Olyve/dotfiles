@@ -1,8 +1,5 @@
 .config/
 .config/nvim/undodir
 !.config/nvim
-!.config/nvim/spell
-!.config/nvim/conf
-!.config/coc
-!.config/lua
+!.config/lua/*
 !.config/init.lua

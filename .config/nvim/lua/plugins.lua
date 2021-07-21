@@ -23,6 +23,10 @@ return require("packer").startup(
     use "scrooloose/nerdtree-project-plugin"
     use "tiagofumo/vim-nerdtree-syntax-highlight"
 
+    -- Nvim Tree (possible replacement for nerdtree)
+    use "kyazdani42/nvim-web-devicons"
+    use "kyazdani42/nvim-tree.lua"
+
     -- Editor Improvements
     use "Asheq/close-buffers.vim"
     use "christoomey/vim-system-copy"
@@ -54,6 +58,15 @@ return require("packer").startup(
     }
     use {"camgraff/telescope-tmux.nvim", requires = {"norcalli/nvim-terminal.lua"}}
     use {"tom-anders/telescope-vim-bookmarks.nvim"}
+    use {"nvim-telescope/telescope-frecency.nvim", requires = {"tami5/sql.nvim"}}
+    use {
+      "nvim-telescope/telescope-media-files.nvim",
+      requires = {
+        "nvim-telescope/telescope.nvim",
+        "nvim-lua/popup.nvim",
+        "nvim-lua/plenary.nvim"
+      }
+    }
 
     -- Treesitter
     use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
@@ -68,27 +81,7 @@ return require("packer").startup(
     use "hrsh7th/nvim-compe"
 
     -- Neorg
-    use {
-      "vhyrro/neorg",
-      config = function()
-        load("neorg").setup {
-          -- tell Neorg what modules to load
-          load = {
-            ["core.defaults"] = {}, -- load all the default modules
-            ["core.neorg.concealer"] = {}, -- allows for use of icons
-            ["core.norg.dirman"] = {
-              -- Manage your directories with Neorg
-              config = {
-                workspaces = {
-                  my_workspace = "~/neorg"
-                }
-              }
-            }
-          }
-        }
-      end,
-      requires = "nvim-lua/plenary.nvim"
-    }
+    use {"vhyrro/neorg", requires = "nvim-lua/plenary.nvim"}
 
     -- Utils
     use "nvim-lua/plenary.nvim"
