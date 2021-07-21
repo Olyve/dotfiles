@@ -50,11 +50,11 @@ map("n", "<leader>bdh", ":Bdelete hidden<cr>")
 map("n", "<leader>nh", ':let @/ = ""<cr>', {silent = true})
 
 -- Terminal Mappings
-map("t", "<esc>", "<c-\\><c-n>")
+map("t", "<c-space>", "<c-\\><c-n>")
 
 ---- Plugin Mappings ----
 
--- NERDTree
+-- Nvim Tree
 map("n", "<leader>nt", ":NvimTreeToggle<cr>", {silent = true})
 
 -- Vim-Bookmarks
