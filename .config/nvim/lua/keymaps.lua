@@ -51,6 +51,7 @@ map("n", "<leader>nh", ':let @/ = ""<cr>', {silent = true})
 
 -- Terminal Mappings
 map("t", "<c-space>", "<c-\\><c-n>")
+map("n", "<leader>to", ":vsplit | :vertical resize -50 | term<cr>", {silent = true})
 
 ---- Plugin Mappings ----
 

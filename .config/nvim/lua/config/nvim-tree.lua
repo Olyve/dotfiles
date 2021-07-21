@@ -1,4 +1,5 @@
 local g = vim.g
+local tree_cb = require "nvim-tree.config".nvim_tree_callback
 
 ---- Settings for Nvim Tree ----
 g.nvim_tree_side = "left"
@@ -6,6 +7,15 @@ g.nvim_tree_width = 30
 g.nvim_tree_ignore = {".git", "node_modules", ".cache"}
 g.nvim_tree_gitignore = 1
 g.nvim_tree_auto_open = 1
+g.nvim_tree_auto_close = 1
+g.nvim_tree_follow = 1
+g.nvim_tree_auto_resize = 1
+g.nvim_tree_lsp_diagnostics = 1
+g.nvim_tree_update_cwd = 1
+g.nvim_tree_bindings = {
+  {key = "v", cb = tree_cb("vsplit")},
+  {key = "s", cb = tree_cb("split")}
+}
 
 -- let g:nvim_tree_side = 'right' "left by default
 -- let g:nvim_tree_width = 40 "30 by default, can be width_in_columns or 'width_in_percent%'
