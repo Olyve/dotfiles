@@ -49,10 +49,13 @@ map("n", "<leader>bdh", ":Bdelete hidden<cr>")
 -- Clear highlighting
 map("n", "<leader>nh", ':let @/ = ""<cr>', {silent = true})
 
+-- Terminal Mappings
+map("t", "<esc>", "<c-\\><c-n>")
+
 ---- Plugin Mappings ----
 
 -- NERDTree
-map("n", "<leader>nt", ":NERDTreeToggle<cr>", {silent = true})
+map("n", "<leader>nt", ":NvimTreeToggle<cr>", {silent = true})
 
 -- Vim-Bookmarks
 map("n", "<leader>mm", ":BookmarkToggle<cr>", {silent = true})

@@ -19,9 +19,9 @@ return require("packer").startup(
     use "tpope/vim-obsession"
 
     -- NERDTree File Tree Viewer
-    use "preservim/nerdtree"
-    use "scrooloose/nerdtree-project-plugin"
-    use "tiagofumo/vim-nerdtree-syntax-highlight"
+    -- use "preservim/nerdtree"
+    -- use "scrooloose/nerdtree-project-plugin"
+    -- use "tiagofumo/vim-nerdtree-syntax-highlight"
 
     -- Nvim Tree (possible replacement for nerdtree)
     use "kyazdani42/nvim-web-devicons"
