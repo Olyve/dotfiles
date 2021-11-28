@@ -10,6 +10,16 @@ require "formatter".setup {
         }
       end
     },
+    rust = {
+      -- Rustfmt
+      function()
+        return {
+          exe = "rustfmt",
+          args = {"--emit=stdout"},
+          stdin = true
+        }
+      end
+    },
     typescript = {
       -- prettier
       function()

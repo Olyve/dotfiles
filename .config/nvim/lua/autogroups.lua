@@ -11,8 +11,9 @@ local definitions = {}
 --   [[BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif]]
 -- }
 definitions["lsp"] = {
-  "CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics()",
+  "CursorHold,CursorHoldI * lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })",
   -- Format document on save
-  "BufWritePost *.lua,*.ts,*.json FormatWrite"
+  "BufWritePost *.lua,*.ts,*.json,*.rs FormatWrite",
+  [[BufNewFile,BufRead * if expand('%:t') !~ '\.' | set syntax=sh | endif]]
 }
 utils.nvim_create_augroups(definitions)

@@ -12,6 +12,8 @@ end
 function _G.tab_complete()
   if fn.pumvisible() == 1 then
     return utils.t "<c-n>"
+  elseif fn["UltiSnips#CanExpandSnippet"] == 1 or fn["UltiSnips#CanJumpForwards"]() == 1 then
+    return utils.t "<c-R>=UltiSnips#ExpandSnippetOrJump()<cr>"
   elseif utils.check_back_space() then
     return utils.t "<tab>"
   else
@@ -22,6 +24,8 @@ end
 function _G.s_tab_complete()
   if fn.pumvisible() == 1 then
     return utils.t "<c-p>"
+  elseif fn["UltiSnips#CanJumpBackwards"]() == 1 then
+    return utils.t "<c-R>=UltiSnips#JumpBackwards()<cr>"
   else
     return utils.t "<c-h>"
   end

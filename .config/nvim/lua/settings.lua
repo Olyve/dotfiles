@@ -2,6 +2,7 @@ local cmd = vim.cmd
 local opt = vim.opt
 local fn = vim.fn
 local g = vim.g
+local api = vim.api
 local indent = 2
 
 cmd "syntax enable"
@@ -42,7 +43,12 @@ opt.undofile = true
 -- Window Local Options
 opt.cursorline = true
 opt.number = true
+opt.signcolumn = "yes"
 opt.wrap = true
 
 -- Leader
 g.mapleader = " "
+
+-- Set : to command globally so it always works
+api.nvim_set_keymap('n', ';', ':', { noremap = true })
+api.nvim_set_keymap('n', ':', ';', { noremap = true })

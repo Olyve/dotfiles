@@ -5,6 +5,18 @@ return require("packer").startup(
     -- Packer can manage itself
     use "wbthomason/packer.nvim"
 
+    -- Load early to use with other plugins keymaps
+    -- use {
+    --   "lazytanuki/nvim-mapper",
+    --   config = function()
+    --     require "nvim-mapper".setup {no_map = true}
+    --   end,
+    --   before = "telescope.nvim"
+    -- }
+
+    -- Which Key for key mappings
+    use "folke/which-key.nvim"
+
     -- Statusline & Symbols
     use "airblade/vim-gitgutter"
     use "bling/vim-bufferline"
@@ -13,19 +25,15 @@ return require("packer").startup(
     -- Tmux Integrations
     use "christoomey/vim-tmux-navigator"
     use "edkolev/tmuxline.vim"
-    use {"andersevenrud/compe-tmux", requires = {"hrsh7th/nvim-compe"}}
 
     -- Session Management
     use "tpope/vim-obsession"
 
-    -- NERDTree File Tree Viewer
-    -- use "preservim/nerdtree"
-    -- use "scrooloose/nerdtree-project-plugin"
-    -- use "tiagofumo/vim-nerdtree-syntax-highlight"
-
-    -- Nvim Tree (possible replacement for nerdtree)
-    use "kyazdani42/nvim-web-devicons"
-    use "kyazdani42/nvim-tree.lua"
+    -- Nvim Tree
+    use {
+      "kyazdani42/nvim-tree.lua",
+      requires = "kyazdani42/nvim-web-devicons"
+    }
 
     -- Editor Improvements
     use "Asheq/close-buffers.vim"
@@ -37,6 +45,7 @@ return require("packer").startup(
     use "tpope/vim-repeat"
     use "tpope/vim-commentary"
     use "tpope/vim-fugitive"
+    use "wfxr/minimap.vim"
 
     -- Language/Syntax
     use "editorconfig/editorconfig-vim"
@@ -77,17 +86,61 @@ return require("packer").startup(
     use "jose-elias-alvarez/nvim-lsp-ts-utils"
     use "mhartington/formatter.nvim"
 
-    -- nvim-compe
-    use "hrsh7th/nvim-compe"
+    -- nvim-cmp
+    use "hrsh7th/cmp-nvim-lsp"
+    use "hrsh7th/cmp-buffer"
+    use "hrsh7th/cmp-path"
+    use "hrsh7th/cmp-cmdline"
+    use "hrsh7th/nvim-cmp"
 
-    -- Neorg
-    use {"vhyrro/neorg", requires = "nvim-lua/plenary.nvim"}
+    -- snippets
+    use "honza/vim-snippets"
+    use "SirVer/ultisnips"
 
     -- Utils
     use "nvim-lua/plenary.nvim"
 
+    -- Tabout
+    use {
+      "abecodes/tabout.nvim",
+      config = function()
+        require("tabout").setup {
+          tabkey = "<Tab>",
+          backwards_tabkey = "<S-Tab>",
+          act_as_tab = true,
+          act_as_shift_tab = false,
+          enable_backwards = true,
+          completion = true,
+          tabouts = {
+            {open = "'", close = "'"},
+            {open = '"', close = '"'},
+            {open = "`", close = "`"},
+            {open = "(", close = ")"},
+            {open = "[", close = "]"},
+            {open = "{", close = "}"}
+          },
+          ignore_beginning = true,
+          exclude = {}
+        }
+      end,
+      wants = {"nvim-treesitter"},
+      after = {"nvim-cmp"}
+    }
+
+    -- Rust Tools
+    use {
+      "simrat39/rust-tools.nvim",
+      requires = {
+        "nvim-lua/popup.nvim",
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim",
+        "mfussenegger/nvim-dap"
+      }
+    }
+
     -- Local Plugins
-    use "~/workspace/neovim/plugins/testing"
+    --     use "~/workspace/neovim/plugins/testing"
+    --     use "~/workspace/neovim/plugins/specterm"
 
     -- Load Last
     use "ryanoasis/vim-devicons"
@@ -127,14 +180,6 @@ return require("packer").startup(
         fileencoding = "v:lua.LightlineFileEncoding()"
       }
     }
-
-    -- NERDTree --
-    g.NERDTreeIgnore = {"node_modules", "dist", "build"}
-    g.NERDTreeDirArrowExpandable = ""
-    g.NERDTreeDirArrowCollapsible = ""
-    g.NERDTreeFileExtensionHighlightFullName = 1
-    g.NERDTreeExactMatchHighlightFullName = 1
-    g.NERDTreePatternMatchHighlightFullName = 1
 
     -- Vista Config --
     g.vista_default_executive = "nvim_lsp"
