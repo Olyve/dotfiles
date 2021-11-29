@@ -13,7 +13,7 @@ cmd "colorscheme molokai"
 opt.background = "dark"
 opt.backup = false
 opt.compatible = false
-opt.completeopt = "menuone,noselect"
+opt.completeopt = "menu,menuone,noselect"
 opt.guifont = "FiraCode_NF"
 opt.hlsearch = true
 opt.ignorecase = true
@@ -25,7 +25,7 @@ opt.showmatch = true
 opt.smartcase = true
 opt.splitbelow = true
 opt.splitright = true
-opt.timeoutlen = 2500
+opt.timeoutlen = 500
 opt.ttimeoutlen = 100
 opt.termguicolors = true
 opt.undodir = fn.getenv("HOME") .. "/.config/nvim/undodir"
@@ -50,5 +50,5 @@ opt.wrap = true
 g.mapleader = " "
 
 -- Set : to command globally so it always works
-api.nvim_set_keymap('n', ';', ':', { noremap = true })
-api.nvim_set_keymap('n', ':', ';', { noremap = true })
+api.nvim_set_keymap("n", ";", ":", {noremap = true})
+api.nvim_set_keymap("n", ":", ";", {noremap = true})

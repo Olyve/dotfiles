@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/home/sam'
-let g:netrw_dirhist_2='/home/sam/workspace'
-let g:netrw_dirhist_3='/home/sam/workspace/linos-backend'

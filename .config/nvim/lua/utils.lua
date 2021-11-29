@@ -17,7 +17,7 @@ function _G.tab_complete()
   elseif utils.check_back_space() then
     return utils.t "<tab>"
   else
-    return fn["compe#complete"]()
+    return fn["cmp#complete"]()
   end
 end
 

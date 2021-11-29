@@ -22,8 +22,9 @@ ZSH_THEME="bullet-train"
 plugins=(
     zsh-nvm
     zsh-256color
+    zsh-better-npm-completion
     git
-    vscode
+    tmux
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -66,6 +67,7 @@ alias vprofile="nvim ~/.config/nvim/init.lua"
 alias clr="clear"
 alias refresh="znap restart"
 alias linos="tmux a -t LinOS"
+alias lsa="ls -Al"
 
 # git alias commands
 alias gf='git fetch'
@@ -110,3 +112,10 @@ export LINOS_DB_AUTOMATION_PASSWORD=local_password
 export LINOS_DB_AUTOMATION_NAME=linos
 
 alias luamake=/home/sam/clones/lua-language-server/3rd/luamake/luamake
+if [ -e /home/sam/.nix-profile/etc/profile.d/nix.sh ]; then . /home/sam/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+# Add custom scripts
+PATH=$PATH:/home/sam/scripts
+
+# Add WABT to path
+PATH=$PATH:/home/sam/clones/wabt-1.0.24/bin/

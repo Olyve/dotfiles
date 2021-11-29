@@ -1,88 +1,140 @@
-local utils = require("utils")
-local map = utils.map
+local api = vim.api
+local map = api.nvim_set_keymap
+local wk = require "which-key"
 
----- Builtin Remaps ----
+-- Buffer
+wk.register(
+  {
+    b = {
+      name = "buffer",
+      d = {
+        name = "delete",
+        o = {":Bdelete other<cr>", "Delete open buffers, except current"},
+        h = {":Bdelete hidden<cr>", "Delete hidden buffers"}
+      }
+    }
+  },
+  {prefix = "<leader>"}
+)
 
--- Remap ';' to be used for commands to eliminate extra shift press
-map("n", ";", ":")
-map("n", ":", ";")
-map("v", ";", ":")
-map("v", ":", ";")
+-- File
+wk.register(
+  {
+    f = {
+      name = "file",
+      b = {"<cmd>lua require('telescope.builtin').buffers()<cr>", "Find buffer"},
+      f = {"<cmd>lua require('telescope.builtin').find_files()<cr>", "Find file"},
+      m = {":Format<cr>", "Format current file using LSP"},
+      r = {":Telescope frecency<cr>", "Search Frecent files"}
+    }
+  },
+  {prefix = "<leader>"}
+)
 
--- Pane navigation made easier
-map("n", "<leader>j", "<c-W><c-J>")
-map("n", "<leader>k", "<c-W><c-K>")
-map("n", "<leader>l", "<c-W><c-L>")
-map("n", "<leader>h", "<c-W><c-H>")
+-- Line
+wk.register(
+  {
+    l = {
+      name = "line",
+      a = {"mpO<esc>`p", "Add an empty line above"},
+      b = {"mpo<esc>`p", "Add an empty line below"}
+    }
+  },
+  {prefix = "<leader>"}
+)
 
--- Faster buffer saving
-map("n", "<Leader>ss", ":w<cr>")
-
--- Shortcut for reloading init.lua
-map("n", "<Leader>sp", ":luafile ~/.config/nvim/init.lua<cr>", {silent = true})
-
--- Use K to show documentation in the preview window
-map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", {silent = true})
-
--- Symbol renaming
-map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", {silent = true})
-
--- LSP Diagnostics
-map("n", "<leader>gn", "<cmd>lua vim.lsp.diagnostic.goto_next()<cr>", {silent = true})
-map("n", "<leader>gp", "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>", {silent = true})
-map("n", "<leader>q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", {silent = true})
-
--- Use Tab and S-Tab to navigate popup window
-map("i", "<tab>", "v:lua.tab_complete()", {expr = true, silent = true})
-map("s", "<tab>", "v:lua.tab_complete()", {expr = true, silent = true})
-map("i", "<s-tab>", "v:lua.s_tab_complete()", {silent = true})
-map("s", "<s-tab>", "v:lua.s_tab_complete()", {silent = true})
-
--- Add space above or below current line
-map("n", "<leader>lb", "mpo<esc>`p")
-map("n", "<leader>la", "mpO<esc>`p")
-
--- Buffer closing shortcuts using :Bdelete
-map("n", "<leader>bdo", ":Bdelete other<cr>")
-map("n", "<leader>bdh", ":Bdelete hidden<cr>")
-
--- Clear highlighting
-map("n", "<leader>nh", ':let @/ = ""<cr>', {silent = true})
-
--- Terminal Mappings
-map("t", "<c-space>", "<c-\\><c-n>")
-map("n", "<leader>to", ":vsplit | :vertical resize -50 | term<cr>", {silent = true})
-
----- Plugin Mappings ----
+-- Marks
+wk.register(
+  {
+    m = {
+      name = "marks",
+      m = {":BookmarkToggle<cr>", "Toggle bookmark"}
+    }
+  },
+  {prefix = "<leader>"}
+)
 
 -- Nvim Tree
-map("n", "<leader>nt", ":NvimTreeToggle<cr>", {silent = true})
+wk.register(
+  {
+    n = {
+      name = "nvim tree",
+      t = {":NvimTreeToggle<cr>", "Toggle NvimTree"}
+    }
+  },
+  {prefix = "<leader>"}
+)
 
--- Vim-Bookmarks
-map("n", "<leader>mm", ":BookmarkToggle<cr>", {silent = true})
+-- Utilities
+wk.register(
+  {
+    ["ss"] = {":w<cr>", "Save current buffer"},
+    ["pg"] = {"<cmd>lua require('telescope.builtin').live_grep()<cr>", "Live grep cwd"},
+    ["K"] = {"<cmd>lua vim.lsp.buf.hover({focusable=false})<cr>", "Show LSP documentation for symbol"}
+  },
+  {prefix = "<leader>"}
+)
 
--- Telescope
-map("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>")
-map("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>")
-map("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>")
-map("n", "<leader>gd", "<cmd>lua require('telescope.builtin').lsp_definitions()<cr>", {silent = true})
-map("n", "<leader>gy", "<cmd>lua vim.lsp.buf.type_definition()<cr>", {silent = true})
-map("n", "<leader>gi", "<cmd>lua require('telescope.builtin').lsp_implementations()<cr>", {silent = true})
-map("n", "<leader>gr", "<cmd>lua require('telescope.builtin').lsp_references()<cr>", {silent = true})
-map("n", "<leader>qf", "<cmd>lua require('telescope.builtin').lsp_code_actions()<cr>", {silent = true})
-map("v", "<leader>qf", "<cmd>lua require('telescope.builtin').lsp_range_code_actions()<cr>", {silent = true})
-map("n", "<leader>ts", ":Telescope tmux sessions<cr>", {silent = true})
-map("n", "<leader>ma", ":Telescope vim_bookmarks all<cr>", {silent = true})
-map("n", "<leader>mf", ":Telescope vim_bookmarks current_file<cr>", {silent = true})
+---- LSP Keymaps ----
 
--- Compe
-map("i", "<c-space>", "compe#confirm()", {expr = true, silent = true})
-map("i", "<cr>", "compe#confirm('<cr>')", {expr = true, silent = true})
-map("i", "<c-e>", "compe#close('<c-e>')", {expr = true, silent = true})
+map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", {noremap = true, silent = true})
+map(
+  "n",
+  "<leader>gn",
+  "<cmd>lua vim.lsp.diagnostic.goto_next({focusable = false})<cr>",
+  {noremap = true, silent = true}
+)
+map(
+  "n",
+  "<leader>gp",
+  "<cmd>lua vim.lsp.diagnostic.goto_prev({focusable = false})<cr>",
+  {noremap = true, silent = true}
+)
 
--- Formatter
-map("n", "<leader>fr", ":Format<cr>", {silent = true})
+---- Movement Keymaps ----
 
--- Vista
-map("n", "<leader>vt", ":Vista!!<cr>")
-map("n", "<leader>vf", ":Vista finder<cr>")
+map("n", "<leader>j", "<c-W><c-J>", {noremap = true})
+map("n", "<leader>k", "<c-W><c-K>", {noremap = true})
+map("n", "<leader>l", "<c-W><c-L>", {noremap = true})
+map("n", "<leader>h", "<c-W><c-H>", {noremap = true})
+
+---- Telescope (and Extensions) Keymaps ----
+
+map("n", "<leader>gd", "<cmd>lua require('telescope.builtin').lsp_definitions()<cr>", {noremap = true, silent = true})
+map("n", "<leader>gy", "<cmd>lua vim.lsp.buf.type_definition()<cr>", {noremap = true, silent = true})
+map(
+  "n",
+  "<leader>gi",
+  "<cmd>lua require('telescope.builtin').lsp_implementations()<cr>",
+  {noremap = true, silent = true}
+)
+map("n", "<leader>gr", "<cmd>lua require('telescope.builtin').lsp_references()<cr>", {noremap = true, silent = true})
+map("n", "<leader>qf", "<cmd>lua require('telescope.builtin').lsp_code_actions()<cr>", {noremap = true, silent = true})
+map(
+  "v",
+  "<leader>qf",
+  "<cmd>lua require('telescope.builtin').lsp_range_code_actions()<cr>",
+  {noremap = true, silent = true}
+)
+map("n", "<leader>ts", ":Telescope tmux sessions<cr>", {noremap = true, silent = true})
+map("n", "<leader>ma", ":Telescope vim_bookmarks all<cr>", {noremap = true, silent = true})
+map("n", "<leader>mf", ":Telescope vim_bookmarks current_file<cr>", {noremap = true, silent = true})
+map("n", "<leader>fr", ":Telescope frecency<cr>", {noremap = true, silent = true})
+map("n", "<leader>gcb", ":Telescope git_branches<cr>", {noremap = true, silent = true})
+map("n", "<leader>fs", ":Telescope current_buffer_fuzzy_find<cr>", {noremap = true, silent = true})
+map("n", "<leader>km", ":Telescope mapper<cr>", {noremap = true, silent = true})
+
+---- Terminal Keymaps ----
+
+map("t", "<c-space>", "<c-\\><c-n>", {noremap = true})
+map("n", "<leader>to", ":vsplit | :vertical resize -50 | term<cr>", {noremap = true, silent = true})
+
+---- Utils Keymaps ----
+
+-- map("n", "<leader>ss", ":w<cr>", {noremap = true, silent = true})
+map("n", "<Leader>sp", ":luafile ~/.config/nvim/init.lua<cr>", {noremap = true, silent = true})
+map("i", "<tab>", "v:lua.tab_complete()", {noremap = true, expr = true, silent = true})
+map("s", "<tab>", "v:lua.tab_complete()", {noremap = true, expr = true, silent = true})
+map("i", "<s-tab>", "v:lua.s_tab_complete()", {noremap = true, silent = true})
+map("s", "<s-tab>", "v:lua.s_tab_complete()", {noremap = true, silent = true})
+map("n", "<leader>nh", ':let @/ = ""<cr>', {noremap = true, silent = true})
