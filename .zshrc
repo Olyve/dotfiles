@@ -88,9 +88,6 @@ alias fixup='git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7
 # Docker Shortcuts
 alias dc='docker-compose'
 
-# Cortex Shortcuts
-alias cortex-dev='ssh ec2-user@ec2-35-161-198-160.us-west-2.compute.amazonaws.com -L 5433:cortex-db-development.cxzmxjvfphpn.us-west-2.rds.amazonaws.com:5432'
-
 # Python Aliases #
 alias python=python3
 
